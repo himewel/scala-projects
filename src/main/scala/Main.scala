@@ -1,5 +1,9 @@
 package com.himewel
 
+import com.himewel.concurrent.{FutureReadersAndWriters, ThreadReadersAndWriters}
+import com.himewel.design.builder.Builder
+import com.himewel.design.factory.{AbstractFactory, FactoryMethod}
+
 @main
 def main(option: String): Unit = {
   if (option.isEmpty) {

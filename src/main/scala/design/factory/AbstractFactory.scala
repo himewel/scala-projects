@@ -1,4 +1,4 @@
-package com.himewel
+package com.himewel.design.factory
 
 // Material abstract and concrete classes
 abstract class Material {

@@ -1,4 +1,4 @@
-package com.himewel
+package com.himewel.design.factory
 
 // Factory method and his companion object
 class HouseFactory(style: Style, material: Material) {

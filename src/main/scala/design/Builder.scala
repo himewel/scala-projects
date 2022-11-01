@@ -1,4 +1,4 @@
-package com.himewel
+package com.himewel.design.builder
 
 abstract class AbstractBuilding(material: String, style: String, color: String)
 

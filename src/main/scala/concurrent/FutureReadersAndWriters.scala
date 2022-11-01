@@ -1,4 +1,4 @@
-package com.himewel
+package com.himewel.concurrent
 
 import java.util.concurrent.Executors
 import scala.concurrent.{Await, ExecutionContext, Future}
