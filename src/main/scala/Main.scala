@@ -3,6 +3,7 @@ package com.himewel
 import com.himewel.concurrent.{FutureReadersAndWriters, ThreadReadersAndWriters}
 import com.himewel.design.builder.Builder
 import com.himewel.design.factory.{AbstractFactory, FactoryMethod}
+import com.himewel.design.prototype.Prototype
 
 @main
 def main(option: String): Unit = {
@@ -17,6 +18,7 @@ def main(option: String): Unit = {
     case "3" => AbstractFactory()
     case "4" => FactoryMethod()
     case "5" => Builder()
+    case "6" => Prototype()
     case _ => println("Wrong option!"); printMenu()
   }
 }
@@ -28,4 +30,5 @@ def printMenu(): Unit = {
   println("3 - AbstractFactory")
   println("4 - FactoryMethod")
   println("5 - Builder")
+  println("5 - Prototype")
 }
