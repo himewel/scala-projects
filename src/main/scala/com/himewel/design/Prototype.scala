@@ -1,7 +1,7 @@
 package com.himewel.design.prototype
 
 case class Person(name: String, occupation: String) {
-  override def toString(): String = s"${name} its a ${occupation}"
+  override def toString(): String = s"${name} is a ${occupation}"
 }
 
 object Prototype {

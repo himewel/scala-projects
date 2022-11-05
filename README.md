@@ -11,7 +11,9 @@ This is a normal sbt project. You can compile code with `sbt compile`, run it wi
 2 - ThreadReadersAndWriters
 3 - AbstractFactory
 4 - FactoryMethod
-4 - Builder
+5 - Builder
+6 - BuilderFacets
+7 - Prototype
 ```
 
 For more information on the sbt-dotty plugin, see the
