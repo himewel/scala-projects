@@ -32,5 +32,5 @@ def printMenu(): Unit = {
   println("4 - FactoryMethod")
   println("5 - Builder")
   println("6 - BuilderFacets")
-  println("5 - Prototype")
+  println("7 - Prototype")
 }

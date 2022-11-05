@@ -1,11 +1,11 @@
 package com.himewel.design.builder
 
 case class Person(
-  firstName: Option[String] = null,
-  lastName: Option[String] = null,
-  age: Option[Int] = null,
-  position: Option[String] = null,
-  companyName: Option[String] = null
+  firstName: Option[String] = None,
+  lastName: Option[String] = None,
+  age: Option[Int] = None,
+  position: Option[String] = None,
+  companyName: Option[String] = None
 ) {
   def copy: Person = this.copy
 
