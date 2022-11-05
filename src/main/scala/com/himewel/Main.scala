@@ -20,7 +20,7 @@ def main(option: String): Unit = {
     case "5" => Builder()
     case "6" => BuilderFacets()
     case "7" => Prototype()
-    case _ => println("Wrong option!"); printMenu()
+    case _   => println("Wrong option!"); printMenu()
   }
 }
 

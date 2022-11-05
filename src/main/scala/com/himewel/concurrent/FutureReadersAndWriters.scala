@@ -45,22 +45,21 @@ abstract class FutureClient {
 }
 
 class FutureReader(implicit ec: ExecutionContext) extends FutureClient {
-  lazy val task = Future[Int]{Database.read()}
+  lazy val task = Future[Int] { Database.read() }
   val name = "Consumer"
 }
 
 class FutureWriter(implicit ec: ExecutionContext) extends FutureClient {
-  lazy val task = Future[Int]{Database.write(_index)}
+  lazy val task = Future[Int] { Database.write(_index) }
   val name = "Producer"
 }
-
 
 object FutureReadersAndWriters {
   def apply(): Unit = {
     println("Starting ReadersAndWriters...")
 
-    val responseList = Random.shuffle(0 to 200).map{
-      (index: Int) => {
+    val responseList = Random.shuffle(0 to 200).map { (index: Int) =>
+      {
         val executor = Executors.newFixedThreadPool(200)
         implicit val ec = ExecutionContext.fromExecutor(executor)
         val client = (index % 2) match {
@@ -68,7 +67,7 @@ object FutureReadersAndWriters {
           case 1 => new FutureReader()
         }
         client.setIndex(index)
-        client.task.onComplete{
+        client.task.onComplete {
           case Success(response) => println(s"$client: $response")
           case Failure(response) => println(response.getMessage)
         }
@@ -76,6 +75,6 @@ object FutureReadersAndWriters {
       }
     }
 
-    responseList.map{(f: Future[Int]) => Await.result(f, 100.seconds)}
+    responseList.map { (f: Future[Int]) => Await.result(f, 100.seconds) }
   }
 }

@@ -2,7 +2,8 @@ package com.himewel.design.factory
 
 // Factory method and his companion object
 class HouseFactory(style: Style, material: Material) {
-  override def toString(): String = s"House made of $material in a $style using FactoryMethod"
+  override def toString(): String =
+    s"House made of $material in a $style using FactoryMethod"
 }
 
 object HouseFactory {

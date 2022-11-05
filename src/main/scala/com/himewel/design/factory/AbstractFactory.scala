@@ -35,7 +35,8 @@ abstract class AbstractHouseFactory {
   val style: Style
   val material: Material
 
-  override def toString(): String = s"House made of $material in a $style using AbstractFactory"
+  override def toString(): String =
+    s"House made of $material in a $style using AbstractFactory"
 }
 
 class WoodyImpressionismHouse extends AbstractHouseFactory {

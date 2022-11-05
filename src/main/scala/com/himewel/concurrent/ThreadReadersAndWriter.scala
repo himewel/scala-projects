@@ -21,14 +21,13 @@ class ThreadWriter extends ThreadClient {
   override def run(): Unit = println(s"${this}: ${Database.write(_index)}")
 }
 
-
 object ThreadReadersAndWriters {
   def apply(): Unit = {
     println("Starting ReadersAndWriters...")
     val pool = Executors.newFixedThreadPool(200)
 
-    val responseList = Random.shuffle(0 to 200).map{
-      (index: Int) => {
+    val responseList = Random.shuffle(0 to 200).map { (index: Int) =>
+      {
         val client = (index % 2) match {
           case 0 => new ThreadReader()
           case 1 => new ThreadWriter()
