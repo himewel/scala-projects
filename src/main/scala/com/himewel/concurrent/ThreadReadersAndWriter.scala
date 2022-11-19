@@ -8,16 +8,16 @@ abstract class ThreadClient extends Thread {
   var _index: Int = 0
 
   override def toString(): String = s"$name $_index"
-  def setIndex(index: Int) = { _index = index }
+  def setIndex(index: Int)        = { _index = index }
 }
 
 class ThreadReader extends ThreadClient {
-  val name = "Consumer"
+  val name                 = "Consumer"
   override def run(): Unit = println(s"${this}: ${Database.read()}")
 }
 
 class ThreadWriter extends ThreadClient {
-  val name = "Producer"
+  val name                 = "Producer"
   override def run(): Unit = println(s"${this}: ${Database.write(_index)}")
 }
 

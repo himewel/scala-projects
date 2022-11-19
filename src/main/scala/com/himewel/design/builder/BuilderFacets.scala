@@ -17,8 +17,8 @@ case class Person(
 
 class PersonBuilder(person: Person = new Person()) {
   def personal: PersonalDataBuilder = new PersonalDataBuilder(this.person)
-  def job: JobDataBuilder = new JobDataBuilder(this.person)
-  def build(): Person = this.person
+  def job: JobDataBuilder           = new JobDataBuilder(this.person)
+  def build(): Person               = this.person
 }
 
 case class PersonalDataBuilder(person: Person) extends PersonBuilder(person) {

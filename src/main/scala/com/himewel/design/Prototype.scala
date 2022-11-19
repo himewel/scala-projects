@@ -6,7 +6,7 @@ case class Person(name: String, occupation: String) {
 
 object Prototype {
   def apply(): Unit = {
-    val joe = new Person("Joe", "Data engineer")
+    val joe  = new Person("Joe", "Data engineer")
     val jack = joe.copy("Jack")
 
     assert(joe == joe.copy(), "copy has returned a different object")

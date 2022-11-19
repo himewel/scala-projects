@@ -6,7 +6,7 @@ import scala.concurrent.duration.DurationInt
 import scala.util.{Success, Failure, Random}
 
 object Database {
-  @volatile private var value: Int = 0
+  @volatile private var value: Int    = 0
   @volatile private var lock: Boolean = false
 
   def read(): Int = {
@@ -41,17 +41,17 @@ abstract class FutureClient {
   var _index: Int = 0
 
   override def toString(): String = s"$name $_index"
-  def setIndex(index: Int) = { _index = index }
+  def setIndex(index: Int)        = { _index = index }
 }
 
 class FutureReader(implicit ec: ExecutionContext) extends FutureClient {
   lazy val task = Future[Int] { Database.read() }
-  val name = "Consumer"
+  val name      = "Consumer"
 }
 
 class FutureWriter(implicit ec: ExecutionContext) extends FutureClient {
   lazy val task = Future[Int] { Database.write(_index) }
-  val name = "Producer"
+  val name      = "Producer"
 }
 
 object FutureReadersAndWriters {
@@ -60,7 +60,7 @@ object FutureReadersAndWriters {
 
     val responseList = Random.shuffle(0 to 200).map { (index: Int) =>
       {
-        val executor = Executors.newFixedThreadPool(200)
+        val executor    = Executors.newFixedThreadPool(200)
         implicit val ec = ExecutionContext.fromExecutor(executor)
         val client = (index % 2) match {
           case 0 => new FutureWriter()
