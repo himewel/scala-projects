@@ -4,6 +4,7 @@ import com.himewel.concurrent.{FutureReadersAndWriters, ThreadReadersAndWriters}
 import com.himewel.design.builder.{Builder, BuilderFacets}
 import com.himewel.design.factory.{AbstractFactory, FactoryMethod}
 import com.himewel.design.prototype.Prototype
+import com.himewel.design.adapter.AdapterWithNoCache
 
 @main
 def main(option: String): Unit = {
@@ -20,6 +21,7 @@ def main(option: String): Unit = {
     case "5" => Builder()
     case "6" => BuilderFacets()
     case "7" => Prototype()
+    case "8" => AdapterWithNoCache()
     case _   => println("Wrong option!"); printMenu()
   }
 }
@@ -33,4 +35,5 @@ def printMenu(): Unit = {
   println("5 - Builder")
   println("6 - BuilderFacets")
   println("7 - Prototype")
+  println("8 - AdapterWithNoCache")
 }
