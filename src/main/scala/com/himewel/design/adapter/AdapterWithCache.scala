@@ -1,24 +1,14 @@
 package com.himewel.design.adapter
 
-case class Point(x: Int, y: Int) {
-  def draw(): Unit = {
-    println(".")
-  }
-}
-case class Line(start: Point, end: Point)
-case class Rectangle(x: Int, y: Int, width: Int, height: Int) {
-  lazy val lineList = Seq(
-    Line(Point(x, y), Point(x + width, y)),
-    Line(Point(x + width, y), Point(x + width, y + height)),
-    Line(Point(x, y), Point(x, y + height)),
-    Line(Point(x, y + height), Point(x + width, y + height))
-  )
-}
-
-object AdapterWithNoCache {
-  var count = 0
+object AdapterWithCache {
+  var count: Int = 0
+  var cache: Map[Int, Seq[Point]] = Map[Int, Seq[Point]]()
 
   def lineToPoint(line: Line): Option[Seq[Point]] = {
+    if (cache.contains(line.hashCode())) {
+      return cache.get(line.hashCode())
+    }
+
     count += 1
     println(
       s"${count}: Generating points for line " +
@@ -39,11 +29,21 @@ object AdapterWithNoCache {
       else None
     )
 
+    cache = cache ++ Map(line.hashCode() -> pointList.get)
     pointList
   }
 
   def apply(): Unit = {
-    val rs = Seq(Rectangle(1, 1, 10, 10), Rectangle(3, 3, 6, 6))
+    val x = Line(Point(0, 0), Point(1, 0)).hashCode()
+    val y = Line(Point(1, 0), Point(1, 0)).hashCode()
+    println((x == y))
+
+
+    val rs = Seq(
+      Rectangle(1, 1, 10, 10), 
+      Rectangle(1, 1, 10, 10), 
+      Rectangle(3, 3, 6, 6)
+    )
 
     print("\n\n--- Drawing some stuff ---\n")
     rs.map(_.lineList.map(lineToPoint(_).map((p: Seq[Point]) => p.map(_.draw()))))
