@@ -1,7 +1,7 @@
 package com.himewel.design.adapter
 
 object AdapterWithCache {
-  var count: Int                  = 0
+  var count: Int = 0
   var cache: Map[Int, Seq[Point]] = Map[Int, Seq[Point]]()
 
   def lineToPoint(line: Line): Option[Seq[Point]] = {
@@ -16,9 +16,9 @@ object AdapterWithCache {
         s"[${line.end.x}, ${line.end.y}]"
     )
 
-    val left   = Seq(line.start.x, line.end.x).min
-    val right  = Seq(line.start.x, line.end.x).max
-    val top    = Seq(line.start.y, line.end.y).min
+    val left = Seq(line.start.x, line.end.x).min
+    val right = Seq(line.start.x, line.end.x).max
+    val top = Seq(line.start.y, line.end.y).min
     val bottom = Seq(line.start.y, line.end.y).min
 
     val pointList =

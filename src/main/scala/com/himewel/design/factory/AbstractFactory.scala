@@ -40,12 +40,12 @@ abstract class AbstractHouseFactory {
 }
 
 class WoodyImpressionismHouse extends AbstractHouseFactory {
-  val style    = new ImpressionismStyle()
+  val style = new ImpressionismStyle()
   val material = new WoodyMaterial()
 }
 
 class BrickRenaissanceHouse extends AbstractHouseFactory {
-  val style    = new RenaissanceStyle()
+  val style = new RenaissanceStyle()
   val material = new BrickMaterial()
 }
 

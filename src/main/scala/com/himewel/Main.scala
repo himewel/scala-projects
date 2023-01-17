@@ -15,17 +15,17 @@ def main(option: String): Unit = {
   }
 
   option match {
-    case "1" => FutureReadersAndWriters()
-    case "2" => ThreadReadersAndWriters()
-    case "3" => AbstractFactory()
-    case "4" => FactoryMethod()
-    case "5" => Builder()
-    case "6" => BuilderFacets()
-    case "7" => Prototype()
-    case "8" => AdapterWithNoCache()
-    case "9" => AdapterWithCache()
+    case "1"  => FutureReadersAndWriters()
+    case "2"  => ThreadReadersAndWriters()
+    case "3"  => AbstractFactory()
+    case "4"  => FactoryMethod()
+    case "5"  => Builder()
+    case "6"  => BuilderFacets()
+    case "7"  => Prototype()
+    case "8"  => AdapterWithNoCache()
+    case "9"  => AdapterWithCache()
     case "10" => MagicSquareGenerator(5)
-    case _   => println("Wrong option!"); printMenu()
+    case _    => println("Wrong option!"); printMenu()
   }
 }
 

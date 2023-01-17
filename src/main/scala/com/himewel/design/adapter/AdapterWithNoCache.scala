@@ -26,20 +26,16 @@ object AdapterWithNoCache {
         s"[${line.end.x}, ${line.end.y}]"
     )
 
-    val left   = Seq(line.start.x, line.end.x).min
-    val right  = Seq(line.start.x, line.end.x).max
-    val top    = Seq(line.start.y, line.end.y).min
+    val left = Seq(line.start.x, line.end.x).min
+    val right = Seq(line.start.x, line.end.x).max
+    val top = Seq(line.start.y, line.end.y).min
     val bottom = Seq(line.start.y, line.end.y).min
 
-    val pointList = (
-      if (right - left == 0)
-        Some((top to bottom).toSeq.map(Point(left, _)))
-      else if (line.end.y - line.start.y == 0)
-        Some((left to right).toSeq.map(Point(_, top)))
-      else None
-    )
-
-    pointList
+    if (right - left == 0)
+      Some((top to bottom).toSeq.map(Point(left, _)))
+    else if (line.end.y - line.start.y == 0)
+      Some((left to right).toSeq.map(Point(_, top)))
+    else None
   }
 
   def apply(): Unit = {

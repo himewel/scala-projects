@@ -21,12 +21,12 @@ object Splitter {
       }
       columns = columns ++ Seq(tmpArray)
     }
-    
+
     var diag1: Seq[Int] = Seq()
     var diag2: Seq[Int] = Seq()
     for (i <- 0 to col_count - 1) {
       for (j <- 0 to row_count - 1) {
-        if (i == j) 
+        if (i == j)
           diag1 = diag1 ++ Seq(array(i)(j))
         if (i == row_count - j - 1)
           diag2 = diag2 ++ Seq(array(i)(j))
@@ -51,7 +51,7 @@ object Verifier {
 object MagicSquareGenerator {
   def apply(size: Int): Unit = {
     val square = Seq.fill(size)(Generator(size))
-    
+
     if (Verifier(Splitter(square))) println(square)
     else MagicSquareGenerator(size)
   }
