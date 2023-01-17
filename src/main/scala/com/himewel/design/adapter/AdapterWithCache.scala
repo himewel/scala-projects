@@ -1,7 +1,7 @@
 package com.himewel.design.adapter
 
 object AdapterWithCache {
-  var count: Int = 0
+  var count: Int                  = 0
   var cache: Map[Int, Seq[Point]] = Map[Int, Seq[Point]]()
 
   def lineToPoint(line: Line): Option[Seq[Point]] = {
@@ -21,13 +21,14 @@ object AdapterWithCache {
     val top    = Seq(line.start.y, line.end.y).min
     val bottom = Seq(line.start.y, line.end.y).min
 
-    val pointList = (
-      if (right - left == 0)
-        Some((top to bottom).toSeq.map(Point(left, _)))
-      else if (line.end.y - line.start.y == 0)
-        Some((left to right).toSeq.map(Point(_, top)))
-      else None
-    )
+    val pointList =
+      (
+        if (right - left == 0)
+          Some((top to bottom).toSeq.map(Point(left, _)))
+        else if (line.end.y - line.start.y == 0)
+          Some((left to right).toSeq.map(Point(_, top)))
+        else None
+      )
 
     cache = cache ++ Map(line.hashCode() -> pointList.get)
     pointList
@@ -38,10 +39,9 @@ object AdapterWithCache {
     val y = Line(Point(1, 0), Point(1, 0)).hashCode()
     println((x == y))
 
-
     val rs = Seq(
-      Rectangle(1, 1, 10, 10), 
-      Rectangle(1, 1, 10, 10), 
+      Rectangle(1, 1, 10, 10),
+      Rectangle(1, 1, 10, 10),
       Rectangle(3, 3, 6, 6)
     )
 
