@@ -1,5 +1,6 @@
 package com.himewel.concurrent
 
+import com.typesafe.scalalogging.Logger
 import java.util.concurrent.Executors
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
@@ -8,28 +9,25 @@ import scala.util.{Success, Failure, Random}
 object Database {
   @volatile private var value: Int = 0
   @volatile private var lock: Boolean = false
+  val logger = Logger(getClass.getName)
 
   def read(): Int = {
-    println("Consumer: Waiting for lock be released")
-    while (lock) {
-      Thread.sleep(1000)
-    }
+    logger.debug("Consumer: Waiting for lock be released")
+    while (lock) Thread.sleep(1000)
     value
   }
 
   def write(newValue: Int): Int = {
-    println("Producer: Waiting for lock be released")
-    while (lock) {
-      Thread.sleep(1000)
-    }
+    logger.debug("Producer: Waiting for lock be released")
+    while (lock) Thread.sleep(1000)
 
-    println("Producer: Acquiring lock")
+    logger.debug("Producer: Acquiring lock")
     lock = true
 
     Thread.sleep(1000)
     value = newValue
 
-    println("Producer: Releasing lock")
+    logger.debug("Producer: Releasing lock")
     lock = false
     newValue
   }
@@ -56,7 +54,8 @@ class FutureWriter(implicit ec: ExecutionContext) extends FutureClient {
 
 object FutureReadersAndWriters {
   def apply(): Unit = {
-    println("Starting ReadersAndWriters...")
+    val logger = Logger(getClass.getName)
+    logger.debug("Starting ReadersAndWriters...")
 
     val responseList = Random.shuffle(0 to 200).map { (index: Int) =>
       {
