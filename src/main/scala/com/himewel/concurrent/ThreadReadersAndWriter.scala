@@ -9,6 +9,7 @@ abstract class ThreadClient extends Thread {
   val name: String
   var _index: Int = 0
   var _db: Database = new Database()
+  var _value: Option[Int] = Some(0)
 
   override def toString(): String = s"$name $_index"
   def setIndex(index: Int) = { _index = index }
@@ -17,12 +18,18 @@ abstract class ThreadClient extends Thread {
 
 class ThreadReader extends ThreadClient {
   val name = "Consumer"
-  override def run(): Unit = logger.debug(s"${this}: ${_db.read()}")
+  override def run(): Unit = {
+    _value = Some(_db.read())
+    logger.debug(s"${this}: ${_value.get}")
+  }
 }
 
 class ThreadWriter extends ThreadClient {
   val name = "Producer"
-  override def run(): Unit = logger.debug(s"${this}: ${_db.write(_index)}")
+  override def run(): Unit = {
+    _value = Some(_index)
+    logger.debug(s"${this}: ${_db.write(_index)}")
+  }
 }
 
 object ThreadReadersAndWriters {
@@ -32,16 +39,14 @@ object ThreadReadersAndWriters {
     val pool = Executors.newFixedThreadPool(200)
 
     val responseList = Random.shuffle(0 to 200).map { (index: Int) =>
-      {
-        val client = (index % 2) match {
-          case 0 => new ThreadReader()
-          case 1 => new ThreadWriter()
-        }
-        val db = new Database()
-        client.setIndex(index)
-        client.setDatabase(db)
-        pool.execute(client)
+      val client = (index % 2) match {
+        case 0 => new ThreadReader()
+        case 1 => new ThreadWriter()
       }
+      val db = new Database()
+      client.setIndex(index)
+      client.setDatabase(db)
+      pool.execute(client)
     }
 
     pool.shutdown()

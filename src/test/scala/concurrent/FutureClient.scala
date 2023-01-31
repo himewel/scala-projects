@@ -63,9 +63,13 @@ class FutureWriterSuite extends AnyFunSuite {
 
     val start = LocalDateTime.now()
     writer.task.onComplete{
-      case Success(value) =>
+      case Success(value) => 
         val end = LocalDateTime.now()
-        assert(end.plus(-1, ChronoUnit.SECONDS).isAfter(start))
+        assert(
+          end.plus(-1, ChronoUnit.SECONDS).isAfter(start) ||
+          end.plus(-1, ChronoUnit.SECONDS).isEqual(start),
+          s"${start} ${end}"
+        )
       case Failure(exception) => fail(exception)
     }
 

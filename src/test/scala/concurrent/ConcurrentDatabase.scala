@@ -11,13 +11,17 @@ class DatabaseSuite extends AnyFunSuite {
     assert(testValue == database.read())
   }
 
-  test("database lock should be enabled when writing") {
+  test("database lock should be activate for 1 second  when writing") {
     import java.time.LocalDateTime
     import java.time.temporal.ChronoUnit
 
     val start = LocalDateTime.now()
     database.write(1000)
     val end = LocalDateTime.now()
-    assert(end.plus(-1, ChronoUnit.SECONDS).isAfter(start))
+    assert(
+      end.plus(-1, ChronoUnit.SECONDS).isAfter(start) ||
+      end.plus(-1, ChronoUnit.SECONDS).isEqual(start), 
+      s"${start} ${end}"
+    )
   }
 }
