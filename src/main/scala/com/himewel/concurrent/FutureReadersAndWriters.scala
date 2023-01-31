@@ -6,7 +6,7 @@ import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 import scala.util.{Success, Failure, Random}
 
-object Database {
+class Database {
   @volatile private var value: Int = 0
   @volatile private var lock: Boolean = false
   val logger = Logger(getClass.getName)
@@ -37,18 +37,20 @@ abstract class FutureClient {
   lazy val task: Future[Int]
   val name: String
   var _index: Int = 0
+  var _db: Database = new Database()
 
   override def toString(): String = s"$name $_index"
   def setIndex(index: Int) = { _index = index }
+  def setDatabase(db: Database) = { _db = db }
 }
 
-class FutureReader(implicit ec: ExecutionContext) extends FutureClient {
-  lazy val task = Future[Int] { Database.read() }
+class FutureReader(implicit val ec: ExecutionContext) extends FutureClient {
+  lazy val task = Future[Int](_db.read())
   val name = "Consumer"
 }
 
-class FutureWriter(implicit ec: ExecutionContext) extends FutureClient {
-  lazy val task = Future[Int] { Database.write(_index) }
+class FutureWriter(implicit val ec: ExecutionContext) extends FutureClient {
+  lazy val task = Future[Int](_db.write(_index))
   val name = "Producer"
 }
 
@@ -61,14 +63,16 @@ object FutureReadersAndWriters {
       {
         val executor = Executors.newFixedThreadPool(200)
         implicit val ec = ExecutionContext.fromExecutor(executor)
+        val db = new Database()
         val client = (index % 2) match {
           case 0 => new FutureWriter()
           case 1 => new FutureReader()
         }
         client.setIndex(index)
+        client.setDatabase(db)
         client.task.onComplete {
-          case Success(response) => println(s"$client: $response")
-          case Failure(response) => println(response.getMessage)
+          case Success(response) => logger.debug(s"$client: $response")
+          case Failure(response) => logger.debug(response.getMessage)
         }
         client.task
       }

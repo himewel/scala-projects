@@ -1,8 +1,9 @@
 import com.himewel.concurrent.Database
 import org.scalatest.funsuite.AnyFunSuite
 
+
 class DatabaseSuite extends AnyFunSuite {
-  val database = Database
+  val database = new Database()
 
   test("database should read same value wrote earlier") {
     val testValue = 1

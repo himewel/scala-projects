@@ -1,29 +1,34 @@
 package com.himewel.concurrent
 
+import com.typesafe.scalalogging.Logger
 import java.util.concurrent.{Executors, TimeUnit}
 import scala.util.Random
 
 abstract class ThreadClient extends Thread {
+  val logger = Logger(getClass.getName)
   val name: String
   var _index: Int = 0
+  var _db: Database = new Database()
 
   override def toString(): String = s"$name $_index"
   def setIndex(index: Int) = { _index = index }
+  def setDatabase(db: Database) = { _db = db }
 }
 
 class ThreadReader extends ThreadClient {
   val name = "Consumer"
-  override def run(): Unit = println(s"${this}: ${Database.read()}")
+  override def run(): Unit = logger.debug(s"${this}: ${_db.read()}")
 }
 
 class ThreadWriter extends ThreadClient {
   val name = "Producer"
-  override def run(): Unit = println(s"${this}: ${Database.write(_index)}")
+  override def run(): Unit = logger.debug(s"${this}: ${_db.write(_index)}")
 }
 
 object ThreadReadersAndWriters {
   def apply(): Unit = {
-    println("Starting ReadersAndWriters...")
+    val logger = Logger(getClass.getName)
+    logger.debug("Starting ReadersAndWriters...")
     val pool = Executors.newFixedThreadPool(200)
 
     val responseList = Random.shuffle(0 to 200).map { (index: Int) =>
@@ -32,7 +37,9 @@ object ThreadReadersAndWriters {
           case 0 => new ThreadReader()
           case 1 => new ThreadWriter()
         }
+        val db = new Database()
         client.setIndex(index)
+        client.setDatabase(db)
         pool.execute(client)
       }
     }
