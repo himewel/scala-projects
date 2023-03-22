@@ -6,6 +6,7 @@ import com.himewel.design.factory.{AbstractFactory, FactoryMethod}
 import com.himewel.design.prototype.Prototype
 import com.himewel.design.adapter.{AdapterWithNoCache, AdapterWithCache}
 import com.himewel.design.facade.MagicSquareGenerator
+import com.himewel.circe.JsonCodec
 
 object MainApp {
   def main(args: Array[String]): Unit = {
@@ -26,6 +27,7 @@ object MainApp {
       case "8"  => AdapterWithNoCache()
       case "9"  => AdapterWithCache()
       case "10" => MagicSquareGenerator(5)
+      case "11" => JsonCodec()
       case _    => println("Wrong option!"); printMenu()
     }
   }
@@ -42,5 +44,6 @@ object MainApp {
     println("8 - AdapterWithNoCache")
     println("9 - AdapterWithCache")
     println("10 - MagicSquareGenerator")
+    println("11 - Circe")
   }
 }

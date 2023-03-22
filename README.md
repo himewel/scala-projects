@@ -1,12 +1,12 @@
-## Scala projects
+# Scala projects
 
 This project was made just to store the concepts I was studying with Scala projects.
 
-### Usage
+## Usage
 
 This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt "run {option}"`, and `sbt console` will start a Scala 3 REPL. Currently, the menu is composed by the following options:
 
-```
+```text
 1 - FutureReadersAndWriters
 2 - ThreadReadersAndWriters
 3 - AbstractFactory
@@ -17,6 +17,7 @@ This is a normal sbt project. You can compile code with `sbt compile`, run it wi
 8 - AdapterWithNoCache
 9 - AdapterWithCache
 10 - Facade - MagicSquareGenerator
+11 - Circe
 ```
 
 For more information on the sbt-dotty plugin, see the
